@@ -1,0 +1,325 @@
+<!doctype html><html lang=zh dir=ltr><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<title>cargo | Rust学习笔记 | Confect</title>
+<meta name=generator content="Hugo Eureka 0.9.0">
+<link rel=stylesheet href=https://nat5uk1.github.io/css/eureka.min.css>
+<script defer src=https://nat5uk1.github.io/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<meta name=description content="什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://nat5uk1.github.io/docs/"},{"@type":"ListItem","position":2,"name":"Rust学习笔记","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},{"@type":"ListItem","position":3,"name":"入门指南","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/"},{"@type":"ListItem","position":4,"name":"cargo","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/"},"headline":"cargo | Rust学习笔记 | Confect","datePublished":"2022-02-12T18:34:44+08:00","dateModified":"2022-02-12T18:34:44+08:00","wordCount":1019,"publisher":{"@type":"Person","name":"NaT5uK1"},"description":"什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─"}</script><meta property="og:title" content="cargo | Rust学习笔记 | Confect">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/">
+<meta property="og:description" content="什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Confect">
+<meta property="article:published_time" content="2022-02-12T18:34:44+08:00">
+<meta property="article:modified_time" content="2022-02-12T18:34:44+08:00">
+<meta property="article:section" content="docs">
+<body class="flex flex-col min-h-screen">
+<header class="fixed flex items-center w-full min-h-16 ps-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+<a href=/ class="me-6 text-primary-text text-xl font-bold">Confect</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/#about class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent me-4">About</a>
+<a href=/posts/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent me-4">Posts</a>
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 selected-menu-item me-4">Docs</a>
+</div>
+<div class=flex>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>浅色</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>深色</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>自动</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
+</nav>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
+</div>
+</header>
+<main class="grow pt-16">
+<div class=ps-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<div class=lg:pt-12>
+<div class="flex flex-col md:flex-row bg-secondary-bg rounded">
+<div class="md:w-1/4 lg:w-1/5 border-e">
+<div class="sticky top-16 pt-6">
+<div id=sidebar-title class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
+<span class=font-semibold>目录</span>
+<i class="fas fa-caret-right ms-1"></i>
+</div>
+<div id=sidebar-toc class="hidden md:block overflow-y-auto mx-6 md:mx-0 pe-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
+<div class="flex flex-wrap ms-4 -me-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>Rust学习笔记</a>
+</div>
+<ul class=ps-6>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/>入门指南</a>
+</div>
+<ul class=ps-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/rustup/>rustup</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/rustc/>rustc</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class="text-eureka hover:text-eureka" href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/>cargo</a>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
+<div class="w-full lg:w-3/4 ps-6 ms-0 me-auto">
+<h1 class="font-bold text-3xl text-primary-text">cargo</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="me-6 my-2">
+<i class="fas fa-calendar me-1"></i>
+<span>2022-02-12</span>
+</div>
+<div class="me-6 my-2">
+<i class="fas fa-clock me-1"></i>
+<span>3分钟阅读时长</span>
+</div>
+</div>
+</div>
+<div class=flex>
+<div class="w-full lg:w-3/4 px-6">
+<div class=content>
+<h2 id=什么是cargo>什么是cargo?</h2>
+<p><code>cargo</code>是Rust的<strong>构建工具</strong>和<strong>包管理工具</strong></p>
+<h2 id=查看cargo版本>查看cargo版本</h2>
+<pre><code class=language-shell>cargo --version
+</code></pre>
+<h2 id=使用cargo-new创建项目>使用cargo new创建项目</h2>
+<pre><code class=language-shell>cargo new hello_cargo
+</code></pre>
+<p>得到如下目录结构：</p>
+<pre><code>hello_cargo
+├── .git
+│   ├── HEAD
+│   ├── config
+│   ├── description
+│   ├── hooks
+│   │   └── README.sample
+│   ├── info
+│   │   └── exclude
+│   ├── objects
+│   │   ├── info
+│   │   └── pack
+│   └── refs
+│       ├── heads
+│       └── tags
+├── .gitignore
+├── Cargo.toml
+└── src
+    └── main.rs
+</code></pre>
+<p>可以看出，<code>cargo new</code>做了以下工作：</p>
+<ol>
+<li>
+<p>创建了一个与项目名同名的文件夹<code>hello_cargo</code></p>
+</li>
+<li>
+<p>在项目根目录下新建了一个名为<code>Cargo.toml</code>的配置文件</p>
+</li>
+<li>
+<p>在项目根目录下创建了<code>src</code>文件夹，其中含有<code>main.rs</code>文件，<code>main.rs</code>文件预置了main函数作为项目的入口</p>
+</li>
+<li>
+<p>初始化了git仓库，并配置了<code>.gitignore</code>文件</p>
+</li>
+</ol>
+<h3 id=cargotoml>Cargo.toml</h3>
+<p>默认会生成如下内容：</p>
+<pre><code class=language-toml>[package]
+name = &quot;hello_cargo&quot;
+version = &quot;0.1.0&quot;
+edition = &quot;2021&quot;
+
+[dependencies]
+
+</code></pre>
+<ul>
+<li><code>[package]</code>，项目的基本配置
+<ul>
+<li><code>name</code>，项目名</li>
+<li><code>version</code>，项目版本</li>
+<li><code>edition</code>，使用的Rust版本</li>
+</ul>
+</li>
+<li><code>[dependencies]</code>，项目的依赖项，依赖的包称作<code>crate</code></li>
+</ul>
+<ul>
+<li>其他配置项详见<a href=https://doc.rust-lang.org/cargo/reference/manifest.html#the-manifest-format>The Cargo Book</a></li>
+</ul>
+<h2 id=使用cargo-build构建项目>使用cargo build构建项目</h2>
+<pre><code class=language-shell>cd hello_cargo
+</code></pre>
+<h3 id=开发环境下构建>开发环境下构建</h3>
+<pre><code class=language-shell>cargo build
+</code></pre>
+<p>得到如下目录结构：</p>
+<pre><code>hello_cargo
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── main.rs
+└── target
+    ├── CACHEDIR.TAG
+    └── debug
+        ├── build
+        ├── deps
+        ├── examples
+        ├── hello_cargo
+        ├── hello_cargo.d
+        └── incremental
+</code></pre>
+<p>可以看出，<code>cargo build</code>做了以下工作：</p>
+<ol>
+<li>在根目录生成<code>Cargo.lock</code>文件，负责追踪项目依赖的精确版本，类似于yarn中<code>yarn.lock</code>的作用</li>
+<li>在<code>target/debug/</code>目录下生成可执行文件<code>hello_cargo</code></li>
+</ol>
+<h3 id=生产环境下构建>生产环境下构建</h3>
+<pre><code class=language-shell>cargo build --release
+</code></pre>
+<p>得到如下目录结构：</p>
+<pre><code class=language-shell>hello_cargo
+├── Cargo.lock
+├── Cargo.toml
+├── src
+│   └── main.rs
+└── target
+    ├── CACHEDIR.TAG
+    ├── debug
+    │   ├── build
+    │   ├── deps
+    │   ├── examples
+    │   ├── hello_cargo
+    │   ├── hello_cargo.d
+    │   └── incremental
+    └── release
+        ├── build
+        ├── deps
+        ├── examples
+        ├── hello_cargo
+        ├── hello_cargo.d
+        └── incremental
+</code></pre>
+<p>与开发环境下相比：</p>
+<ol>
+<li>
+<p>编译时会进行优化，代码会运行得更快，编译时间更长</p>
+</li>
+<li>
+<p>会在<code>target/release/</code>目录下生成可执行文件<code>hello_cargo</code></p>
+</li>
+</ol>
+<h2 id=使用cargo-run运行项目>使用cargo run运行项目</h2>
+<pre><code class=language-shell>cargo run
+</code></pre>
+<p>得到如下输出：</p>
+<pre><code class=language-shell>   Compiling hello_cargo v0.1.0 (*/**/hello_cargo)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.29s
+     Running `target/debug/hello_cargo`
+Hello, world!
+</code></pre>
+<p><code>cargo run</code>是<strong>编译代码</strong>+<strong>执行二进制文件</strong>两个过程，即可以不借助<code>cargo build</code>完成项目运行</p>
+<blockquote>
+<p>如果之前编译成功过（<code>cargo build</code>或者<code>cargo run</code>)，并且源码没有更改，则会直接运行二进制文件</p>
+</blockquote>
+<h2 id=使用cargo-check检查代码>使用cargo check检查代码</h2>
+<pre><code class=language-shell>cargo check
+</code></pre>
+<p>得到如下输出：</p>
+<pre><code class=language-shell>    Finished dev [unoptimized + debuginfo] target(s) in 0.03s
+</code></pre>
+<p>代表代码通过编译</p>
+<blockquote>
+<p>此过程不会产生任何可执行文件，速度远比<code>cargo build</code>快</p>
+</blockquote>
+</div>
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+<div>
+<span class="block font-bold">上一页</span>
+<a href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/rustc/ class=block>rustc</a>
+</div>
+<div class="md:text-right mt-4 md:mt-0">
+</div>
+</div>
+</div>
+<div class="hidden lg:block lg:w-1/4">
+<div class="sticky top-16 z-10 hidden lg:block px-6 py-4 bg-secondary-bg pt-16 -mt-16">
+<span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 pt-10 -mt-10 border-s">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#什么是cargo>什么是cargo?</a></li>
+<li><a href=#查看cargo版本>查看cargo版本</a></li>
+<li><a href=#使用cargo-new创建项目>使用cargo new创建项目</a>
+<ul>
+<li><a href=#cargotoml>Cargo.toml</a></li>
+</ul>
+</li>
+<li><a href=#使用cargo-build构建项目>使用cargo build构建项目</a>
+<ul>
+<li><a href=#开发环境下构建>开发环境下构建</a></li>
+<li><a href=#生产环境下构建>生产环境下构建</a></li>
+</ul>
+</li>
+<li><a href=#使用cargo-run运行项目>使用cargo run运行项目</a></li>
+<li><a href=#使用cargo-check检查代码>使用cargo check检查代码</a></li>
+</ul>
+</nav>
+</div>
+<script>window.addEventListener('DOMContentLoaded',()=>{enableStickyToc()})</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad(),changeSidebarHeight(),switchDocToc()})</script>
+</div>
+</div>
+</main>
+<footer class=ps-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text"> Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
+</div></div>
+</footer>
+</body>
+</html>
