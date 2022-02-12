@@ -1,6 +1,5 @@
 ---
 title: rustup
-description:
 toc: true
 authors: []
 date: 2022-02-12T13:53:35+08:00

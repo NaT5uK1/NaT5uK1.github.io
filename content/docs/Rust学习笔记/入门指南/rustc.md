@@ -1,6 +1,5 @@
 ---
 title: rustc
-description:
 toc: true
 authors: []
 date: 2022-02-12T17:55:52+08:00
