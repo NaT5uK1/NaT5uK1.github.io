@@ -25,7 +25,7 @@ highlight:
     # See https://github.com/highlightjs/cdn-release/tree/master/build/languages for available languages.
     languages:
     # See https://github.com/highlightjs/cdn-release/tree/master/build/styles for available styles.
-    style: night-owl
+    style: solarized-light
 
 math:
   handler: katex
