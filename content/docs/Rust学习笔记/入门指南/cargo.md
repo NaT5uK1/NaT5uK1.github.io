@@ -31,7 +31,7 @@ cargo new hello_cargo
 
 得到如下目录结构：
 
-```
+```shell
 hello_cargo
 ├── .git
 │   ├── HEAD
@@ -105,7 +105,7 @@ cargo build
 
 得到如下目录结构：
 
-```
+```shell
 hello_cargo
 ├── Cargo.lock
 ├── Cargo.toml
@@ -122,12 +122,14 @@ hello_cargo
         └── incremental
 ```
 
-可以看出，`cargo build`做了以下工作：
+`cargo build`做了以下工作：
 
-1. 在根目录生成`Cargo.lock`文件，负责追踪项目依赖的精确版本，类似于yarn中`yarn.lock`的作用
-2. 在`target/debug/`目录下生成可执行文件`hello_cargo`
+1. 如果是初次构建，会根据`Cargo.toml`文件中的 `[dependencies]`项，在根目录生成`Cargo.lock`文件，负责追踪项目依赖的精确版本，类似于yarn中`yarn.lock`的作用
+1. 根据 `[dependencies]`项中指定的crate形如`aa.bb.cc`的版本号，更新`cargo.lock`文件中的精确版本到`aa.bb.nn`，此处`nn`为最高的可用版本号
+1. 根据`cargo.lock`文件下载项目依赖
+2. 执行编译过程，在`target/debug/`目录下生成可执行文件`hello_cargo`
 
-
+> 此处为解释方便，忽略 `[dependencies]`与 `[devDependencies]`的区别
 
 ### 生产环境下构建
 
@@ -163,8 +165,8 @@ hello_cargo
 
 与开发环境下相比：
 
-1. 编译时会进行优化，代码会运行得更快，编译时间更长
-
+1. 此时已经非初次构建，所以不会创建`Cargo.lock`文件
+2. 编译时会进行优化，代码会运行得更快，编译时间更长
 2. 会在`target/release/`目录下生成可执行文件`hello_cargo`
 
 
@@ -184,9 +186,9 @@ cargo run
 Hello, world!
 ```
 
-`cargo run`是**编译代码**+**执行二进制文件**两个过程，即可以不借助`cargo build`完成项目运行
+`cargo run`是**编译代码**+**执行二进制文件**两个过程
 
-> 如果之前编译成功过（`cargo build`或者`cargo run`)，并且源码没有更改，则会直接运行二进制文件
+> 如果之前编译成功过（`cargo build`或者`cargo run`)，并且源码没有更改，则会直接执行二进制文件
 
 
 
