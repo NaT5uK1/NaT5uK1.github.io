@@ -16,7 +16,7 @@
 <script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
 <meta name=description content="什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://nat5uk1.github.io/docs/"},{"@type":"ListItem","position":2,"name":"Rust学习笔记","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},{"@type":"ListItem","position":3,"name":"入门指南","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/"},{"@type":"ListItem","position":4,"name":"cargo","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/"},"headline":"cargo | Rust学习笔记 | Confect","datePublished":"2022-02-12T18:34:44+08:00","dateModified":"2022-02-12T18:34:44+08:00","wordCount":1019,"publisher":{"@type":"Person","name":"NaT5uK1"},"description":"什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─"}</script><meta property="og:title" content="cargo | Rust学习笔记 | Confect">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/"},"headline":"cargo | Rust学习笔记 | Confect","datePublished":"2022-02-12T18:34:44+08:00","dateModified":"2022-02-12T18:34:44+08:00","wordCount":1212,"publisher":{"@type":"Person","name":"NaT5uK1"},"description":"什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─"}</script><meta property="og:title" content="cargo | Rust学习笔记 | Confect">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97/cargo/">
 <meta property="og:description" content="什么是cargo? cargo是Rust的构建工具和包管理工具 查看cargo版本 cargo --version 使用cargo new创建项目 cargo new hello_cargo 得到如下目录结构： hello_cargo ├── .git │ ├─">
@@ -98,6 +98,23 @@
 </li>
 </ul>
 </li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/>常见编程概念</a>
+</div>
+<ul class=ps-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%80%A7/>变量与可变性</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/>数据类型</a>
+</div>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -128,7 +145,7 @@
 <pre><code class=language-shell>cargo new hello_cargo
 </code></pre>
 <p>得到如下目录结构：</p>
-<pre><code>hello_cargo
+<pre><code class=language-shell>hello_cargo
 ├── .git
 │   ├── HEAD
 │   ├── config
@@ -193,7 +210,7 @@ edition = &quot;2021&quot;
 <pre><code class=language-shell>cargo build
 </code></pre>
 <p>得到如下目录结构：</p>
-<pre><code>hello_cargo
+<pre><code class=language-shell>hello_cargo
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
@@ -208,11 +225,16 @@ edition = &quot;2021&quot;
         ├── hello_cargo.d
         └── incremental
 </code></pre>
-<p>可以看出，<code>cargo build</code>做了以下工作：</p>
+<p><code>cargo build</code>做了以下工作：</p>
 <ol>
-<li>在根目录生成<code>Cargo.lock</code>文件，负责追踪项目依赖的精确版本，类似于yarn中<code>yarn.lock</code>的作用</li>
-<li>在<code>target/debug/</code>目录下生成可执行文件<code>hello_cargo</code></li>
+<li>如果是初次构建，会根据<code>Cargo.toml</code>文件中的 <code>[dependencies]</code>项，在根目录生成<code>Cargo.lock</code>文件，负责追踪项目依赖的精确版本，类似于yarn中<code>yarn.lock</code>的作用</li>
+<li>根据 <code>[dependencies]</code>项中指定的crate形如<code>aa.bb.cc</code>的版本号，更新<code>cargo.lock</code>文件中的精确版本到<code>aa.bb.nn</code>，此处<code>nn</code>为最高的可用版本号</li>
+<li>根据<code>cargo.lock</code>文件下载项目依赖</li>
+<li>执行编译过程，在<code>target/debug/</code>目录下生成可执行文件<code>hello_cargo</code></li>
 </ol>
+<blockquote>
+<p>此处为解释方便，忽略 <code>[dependencies]</code>与 <code>[devDependencies]</code>的区别</p>
+</blockquote>
 <h3 id=生产环境下构建>生产环境下构建</h3>
 <pre><code class=language-shell>cargo build --release
 </code></pre>
@@ -241,12 +263,9 @@ edition = &quot;2021&quot;
 </code></pre>
 <p>与开发环境下相比：</p>
 <ol>
-<li>
-<p>编译时会进行优化，代码会运行得更快，编译时间更长</p>
-</li>
-<li>
-<p>会在<code>target/release/</code>目录下生成可执行文件<code>hello_cargo</code></p>
-</li>
+<li>此时已经非初次构建，所以不会创建<code>Cargo.lock</code>文件</li>
+<li>编译时会进行优化，代码会运行得更快，编译时间更长</li>
+<li>会在<code>target/release/</code>目录下生成可执行文件<code>hello_cargo</code></li>
 </ol>
 <h2 id=使用cargo-run运行项目>使用cargo run运行项目</h2>
 <pre><code class=language-shell>cargo run
@@ -257,9 +276,9 @@ edition = &quot;2021&quot;
      Running `target/debug/hello_cargo`
 Hello, world!
 </code></pre>
-<p><code>cargo run</code>是<strong>编译代码</strong>+<strong>执行二进制文件</strong>两个过程，即可以不借助<code>cargo build</code>完成项目运行</p>
+<p><code>cargo run</code>是<strong>编译代码</strong>+<strong>执行二进制文件</strong>两个过程</p>
 <blockquote>
-<p>如果之前编译成功过（<code>cargo build</code>或者<code>cargo run</code>)，并且源码没有更改，则会直接运行二进制文件</p>
+<p>如果之前编译成功过（<code>cargo build</code>或者<code>cargo run</code>)，并且源码没有更改，则会直接执行二进制文件</p>
 </blockquote>
 <h2 id=使用cargo-check检查代码>使用cargo check检查代码</h2>
 <pre><code class=language-shell>cargo check

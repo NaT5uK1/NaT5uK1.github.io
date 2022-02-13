@@ -1,6 +1,6 @@
 <!doctype html><html lang=zh dir=ltr><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
-<title>Rust学习笔记 | Confect</title>
+<title>数据类型 | Rust学习笔记 | Confect</title>
 <meta name=generator content="Hugo Eureka 0.9.0">
 <link rel=stylesheet href=https://nat5uk1.github.io/css/eureka.min.css>
 <script defer src=https://nat5uk1.github.io/js/eureka.min.js></script>
@@ -14,18 +14,17 @@
 <script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
 <script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
 <script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<meta name=description content="Personal Blog">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://nat5uk1.github.io/docs/"},{"@type":"ListItem","position":2,"name":"Rust学习笔记","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},"headline":"Rust学习笔记 | Confect","publisher":{"@type":"Person","name":"NaT5uK1"},"description":"Personal Blog"}</script><meta property="og:title" content="Rust学习笔记 | Confect">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-<meta property="og:description" content="Personal Blog">
+<meta name=description content="Rust是静态编译语言，在编译时必须明确所有变量的类型。 编译器可以通过类型推断明确变量类型 当类型推断无法明确变量类型时，就必须添加类型标注 标量类型 整数">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://nat5uk1.github.io/docs/"},{"@type":"ListItem","position":2,"name":"Rust学习笔记","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},{"@type":"ListItem","position":3,"name":"常见编程概念","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/"},{"@type":"ListItem","position":4,"name":"数据类型","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"},"headline":"数据类型 | Rust学习笔记 | Confect","datePublished":"2022-02-13T16:28:17+08:00","dateModified":"2022-02-13T16:28:17+08:00","wordCount":570,"publisher":{"@type":"Person","name":"NaT5uK1"},"description":"Rust是静态编译语言，在编译时必须明确所有变量的类型。 编译器可以通过类型推断明确变量类型 当类型推断无法明确变量类型时，就必须添加类型标注 标量类型 整数"}</script><meta property="og:title" content="数据类型 | Rust学习笔记 | Confect">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+<meta property="og:description" content="Rust是静态编译语言，在编译时必须明确所有变量的类型。 编译器可以通过类型推断明确变量类型 当类型推断无法明确变量类型时，就必须添加类型标注 标量类型 整数">
 <meta property="og:locale" content="zh">
 <meta property="og:site_name" content="Confect">
-<meta property="og:updated_time" content="2022-02-12T12:55:43+08:00">
+<meta property="article:published_time" content="2022-02-13T16:28:17+08:00">
+<meta property="article:modified_time" content="2022-02-13T16:28:17+08:00">
 <meta property="article:section" content="docs">
-<meta property="article:tag" content="Rust">
-<link rel=alternate type=application/rss+xml href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml title=Confect>
 <body class="flex flex-col min-h-screen">
 <header class="fixed flex items-center w-full min-h-16 ps-scrollbar z-50 bg-secondary-bg shadow-sm">
 <div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
@@ -74,7 +73,7 @@
 </div>
 <div id=sidebar-toc class="hidden md:block overflow-y-auto mx-6 md:mx-0 pe-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
 <div class="flex flex-wrap ms-4 -me-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
-<a class="text-eureka hover:text-eureka" href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>Rust学习笔记</a>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>Rust学习笔记</a>
 </div>
 <ul class=ps-6>
 <li class=py-2>
@@ -111,7 +110,7 @@
 </li>
 <li class=py-2>
 <div>
-<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/>数据类型</a>
+<a class="text-eureka hover:text-eureka" href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/>数据类型</a>
 </div>
 </li>
 </ul>
@@ -122,29 +121,205 @@
 </div>
 <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
 <div class="w-full lg:w-3/4 ps-6 ms-0 me-auto">
-<h1 class="font-bold text-3xl text-primary-text">Rust学习笔记</h1>
+<h1 class="font-bold text-3xl text-primary-text">数据类型</h1>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="me-6 my-2">
 <i class="fas fa-calendar me-1"></i>
-<span>2022-02-12</span>
+<span>2022-02-13</span>
 </div>
 <div class="me-6 my-2">
 <i class="fas fa-clock me-1"></i>
-<span>0分钟阅读时长</span>
-</div>
-<div class="me-6 my-2">
-<i class="fas fa-folder me-1"></i>
-<a href=https://nat5uk1.github.io/categories/rust/ class=hover:text-eureka>Rust</a>
+<span>2分钟阅读时长</span>
 </div>
 </div>
 </div>
 <div class=flex>
 <div class="w-full lg:w-3/4 px-6">
 <div class=content>
+<p>Rust是静态编译语言，在编译时必须明确所有变量的类型。</p>
+<ul>
+<li>编译器可以通过类型推断明确变量类型</li>
+<li>当类型推断无法明确变量类型时，就必须添加类型标注</li>
+</ul>
+<h2 id=标量类型>标量类型</h2>
+<h3 id=整数类型>整数类型</h3>
+<ul>
+<li>表示方式</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>长度</th>
+<th style=text-align:center>有符号表示</th>
+<th style=text-align:center>无符号表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>8-bit</td>
+<td style=text-align:center>i8</td>
+<td style=text-align:center>u8</td>
+</tr>
+<tr>
+<td style=text-align:center>16-bit</td>
+<td style=text-align:center>i16</td>
+<td style=text-align:center>u16</td>
+</tr>
+<tr>
+<td style=text-align:center>32-bit</td>
+<td style=text-align:center>i32</td>
+<td style=text-align:center>u32</td>
+</tr>
+<tr>
+<td style=text-align:center>64-bit</td>
+<td style=text-align:center>i64</td>
+<td style=text-align:center>u64</td>
+</tr>
+<tr>
+<td style=text-align:center>128-bit</td>
+<td style=text-align:center>i128</td>
+<td style=text-align:center>u128</td>
+</tr>
+<tr>
+<td style=text-align:center>arch</td>
+<td style=text-align:center>isize</td>
+<td style=text-align:center>usize</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>取值范围：无符号整数范围：$[0,2^n-1]$，有符号整数范围：$[-2^{n-1},2^{n-1}-1]$</p>
+</li>
+<li>
+<p>默认类型：i32</p>
+</li>
+<li>
+<p>isize和usize：长度由计算机的架构决定，例如：32位计算机，isize即为i32类型，usize即为u32类型</p>
+</li>
+<li>
+<p>字面量</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>进制数</th>
+<th style=text-align:center>表示方式</th>
+<th style=text-align:center>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>Decimal</td>
+<td style=text-align:center>十进制数字</td>
+<td style=text-align:center>123_000</td>
+</tr>
+<tr>
+<td style=text-align:center>Hex</td>
+<td style=text-align:center>以<code>0x</code>开头</td>
+<td style=text-align:center>0xff</td>
+</tr>
+<tr>
+<td style=text-align:center>Octal</td>
+<td style=text-align:center>以<code>0o</code>开头</td>
+<td style=text-align:center>0o77</td>
+</tr>
+<tr>
+<td style=text-align:center>Binary</td>
+<td style=text-align:center>以<code>0b</code>开头</td>
+<td style=text-align:center>0b1111_1010</td>
+</tr>
+<tr>
+<td style=text-align:center>Byte（仅限u8类型）</td>
+<td style=text-align:center>以<code>b</code>开头</td>
+<td style=text-align:center>b&rsquo;A'</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>类型后缀：除了Byte类型外，所有数值类型的字面量都允许使用类型后缀，例如：32u32，表示u32类型的十进制数32，再比如：0b1010u8表示u8类型的二进制数1010</li>
+<li>整型溢出</li>
+</ul>
+<blockquote>
+<p>与<a href=https://doc.rust-lang.org/book/ch03-02-data-types.html#integer-overflow>官方文档</a>不同，经笔者测试，在此文发布时，无论是debug模式还是release模式编译，均会报错。<del>（尚不能确定错误是否为panic）</del></p>
+</blockquote>
+<h3 id=浮点类型>浮点类型</h3>
+<ul>
+<li>表示方式</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>长度</th>
+<th style=text-align:center>表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>32-bit</td>
+<td style=text-align:center>f32</td>
+</tr>
+<tr>
+<td style=text-align:center>64-bit</td>
+<td style=text-align:center>f64</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>默认类型：f64</li>
+</ul>
+<h3 id=布尔类型>布尔类型</h3>
+<ul>
+<li>表示方式：<code>bool</code></li>
+<li>取值：<code>true</code>或<code>false</code></li>
+</ul>
+<h3 id=字符类型>字符类型</h3>
+<ul>
+<li>
+<p>表示方式：<code>char</code></p>
+</li>
+<li>
+<p>字面量表示：使用单引号</p>
+</li>
+<li>
+<p>长度：32-bit</p>
+</li>
+<li>
+<p><code>char</code>类型代表一个Unicode 标量值，包含从 <code>U+0000</code> 到 <code>U+D7FF</code> 和 <code>U+E000</code> 到 <code>U+10FFFF</code> 在内的值。</p>
+</li>
+</ul>
+<h2 id=复合类型>复合类型</h2>
 </div>
-<div class=my-4>
-<a href=https://nat5uk1.github.io/tags/rust/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#Rust</a>
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+<div>
+<span class="block font-bold">上一页</span>
+<a href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E5%8F%98%E9%87%8F%E4%B8%8E%E5%8F%AF%E5%8F%98%E6%80%A7/ class=block>变量与可变性</a>
 </div>
+<div class="md:text-right mt-4 md:mt-0">
+</div>
+</div>
+</div>
+<div class="hidden lg:block lg:w-1/4">
+<div class="sticky top-16 z-10 hidden lg:block px-6 py-4 bg-secondary-bg pt-16 -mt-16">
+<span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 pt-10 -mt-10 border-s">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#标量类型>标量类型</a>
+<ul>
+<li><a href=#整数类型>整数类型</a></li>
+<li><a href=#浮点类型>浮点类型</a></li>
+<li><a href=#布尔类型>布尔类型</a></li>
+<li><a href=#字符类型>字符类型</a></li>
+</ul>
+</li>
+<li><a href=#复合类型>复合类型</a></li>
+</ul>
+</nav>
+</div>
+<script>window.addEventListener('DOMContentLoaded',()=>{enableStickyToc()})</script>
 </div>
 </div>
 </div>
