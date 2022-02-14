@@ -3,7 +3,7 @@ title: NaT5uK1
 draft: false
 role: Developer
 avatar: https://github-page-img.oss-cn-hongkong.aliyuncs.com/img/avatar.jpg
-bio: 真剣に努力して夢を必ず叶える
+bio: 《Clannad》《我不是药神》《SHERLOCK》《MapleStory》《天の弱》
 organization:
   name:
   url:
