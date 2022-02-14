@@ -2,7 +2,7 @@
 title: NaT5uK1
 draft: false
 role: Developer
-avatar: img/avatar.jpg
+avatar: https://github-page-img.oss-cn-hongkong.aliyuncs.com/img/avatar.jpg
 bio: 真剣に努力して夢を必ず叶える
 organization:
   name:

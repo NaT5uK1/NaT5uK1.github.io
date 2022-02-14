@@ -2,8 +2,8 @@
 title: Poem
 draft: false
 slogan: 人生というのは書き筋がないドラマだ
-imgLeft: img/01.png
-imgRight: img/02.png
+imgLeft: https://github-page-img.oss-cn-hongkong.aliyuncs.com/img/01.png
+imgRight: https://github-page-img.oss-cn-hongkong.aliyuncs.com/img/02.png
 
 weight: 1
 widget:
