@@ -1,6 +1,6 @@
 <!doctype html><html lang=zh dir=ltr><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
-<title>Rust学习笔记 | Confect</title>
+<title>控制流 | Rust学习笔记 | Confect</title>
 <meta name=generator content="Hugo Eureka 0.9.0">
 <link rel=stylesheet href=https://nat5uk1.github.io/css/eureka.min.css>
 <script defer src=https://nat5uk1.github.io/js/eureka.min.js></script>
@@ -14,18 +14,17 @@
 <script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
 <script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
 <script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<meta name=description content="Personal Blog">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://nat5uk1.github.io/docs/"},{"@type":"ListItem","position":2,"name":"Rust学习笔记","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},"headline":"Rust学习笔记 | Confect","publisher":{"@type":"Person","name":"NaT5uK1"},"description":"Personal Blog"}</script><meta property="og:title" content="Rust学习笔记 | Confect">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
-<meta property="og:description" content="Personal Blog">
+<meta name=description content="if表达式 if是一个表达式，而不是语句，所以可以放在等号的右边 fn main() { let condition = true; let number = if condition { 5 } else { 6 }; println!(&#34;The value of number is: {}&#34;, number); } if表达式的条件必须是bool类型">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://nat5uk1.github.io/docs/"},{"@type":"ListItem","position":2,"name":"Rust学习笔记","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"},{"@type":"ListItem","position":3,"name":"常见编程概念","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/"},{"@type":"ListItem","position":4,"name":"控制流","item":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%8E%A7%E5%88%B6%E6%B5%81/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%8E%A7%E5%88%B6%E6%B5%81/"},"headline":"控制流 | Rust学习笔记 | Confect","datePublished":"2022-02-14T18:34:00+08:00","dateModified":"2022-02-14T18:34:00+08:00","wordCount":394,"publisher":{"@type":"Person","name":"NaT5uK1"},"description":"if表达式 if是一个表达式，而不是语句，所以可以放在等号的右边 fn main() { let condition = true; let number = if condition { 5 } else { 6 }; println!(\u0026quot;The value of number is: {}\u0026quot;, number); } if表达式的条件必须是bool类型"}</script><meta property="og:title" content="控制流 | Rust学习笔记 | Confect">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%8E%A7%E5%88%B6%E6%B5%81/">
+<meta property="og:description" content="if表达式 if是一个表达式，而不是语句，所以可以放在等号的右边 fn main() { let condition = true; let number = if condition { 5 } else { 6 }; println!(&#34;The value of number is: {}&#34;, number); } if表达式的条件必须是bool类型">
 <meta property="og:locale" content="zh">
 <meta property="og:site_name" content="Confect">
-<meta property="og:updated_time" content="2022-02-12T12:55:43+08:00">
+<meta property="article:published_time" content="2022-02-14T18:34:00+08:00">
+<meta property="article:modified_time" content="2022-02-14T18:34:00+08:00">
 <meta property="article:section" content="docs">
-<meta property="article:tag" content="Rust">
-<link rel=alternate type=application/rss+xml href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml title=Confect>
 <body class="flex flex-col min-h-screen">
 <header class="fixed flex items-center w-full min-h-16 ps-scrollbar z-50 bg-secondary-bg shadow-sm">
 <div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
@@ -74,7 +73,7 @@
 </div>
 <div id=sidebar-toc class="hidden md:block overflow-y-auto mx-6 md:mx-0 pe-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
 <div class="flex flex-wrap ms-4 -me-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
-<a class="text-eureka hover:text-eureka" href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>Rust学习笔记</a>
+<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/>Rust学习笔记</a>
 </div>
 <ul class=ps-6>
 <li class=py-2>
@@ -121,7 +120,7 @@
 </li>
 <li class=py-2>
 <div>
-<a class=hover:text-eureka href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%8E%A7%E5%88%B6%E6%B5%81/>控制流</a>
+<a class="text-eureka hover:text-eureka" href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E6%8E%A7%E5%88%B6%E6%B5%81/>控制流</a>
 </div>
 </li>
 </ul>
@@ -132,29 +131,121 @@
 </div>
 <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
 <div class="w-full lg:w-3/4 ps-6 ms-0 me-auto">
-<h1 class="font-bold text-3xl text-primary-text">Rust学习笔记</h1>
+<h1 class="font-bold text-3xl text-primary-text">控制流</h1>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="me-6 my-2">
 <i class="fas fa-calendar me-1"></i>
-<span>2022-02-12</span>
+<span>2022-02-14</span>
 </div>
 <div class="me-6 my-2">
 <i class="fas fa-clock me-1"></i>
-<span>0分钟阅读时长</span>
-</div>
-<div class="me-6 my-2">
-<i class="fas fa-folder me-1"></i>
-<a href=https://nat5uk1.github.io/categories/rust/ class=hover:text-eureka>Rust</a>
+<span>1分钟阅读时长</span>
 </div>
 </div>
 </div>
 <div class=flex>
 <div class="w-full lg:w-3/4 px-6">
 <div class=content>
+<h2 id=if表达式>if表达式</h2>
+<ul>
+<li><code>if</code>是一个<strong>表达式</strong>，而不是语句，所以可以放在等号的右边</li>
+</ul>
+<pre><code class=language-rust>fn main() {
+    let condition = true;
+    let number = if condition { 5 } else { 6 };
+
+    println!(&quot;The value of number is: {}&quot;, number);
+}
+</code></pre>
+<ul>
+<li>
+<p>if表达式的条件必须是<code>bool</code>类型，不能像javascript使用一个对象作为条件</p>
+</li>
+<li>
+<p>if表达式所有可能的分支产生的值的类型必须是<strong>一致</strong>的</p>
+</li>
+</ul>
+<h2 id=match表达式>match表达式</h2>
+<p>见<a href>枚举与模式匹配</a>章节</p>
+<h2 id=循环>循环</h2>
+<h3 id=loop>loop</h3>
+<p>反复执行一段代码，直到使用<code>break</code>关键字停止</p>
+<pre><code class=language-rust>fn main() {
+    let mut counter = 0;
+
+    let result = loop {
+        counter += 1;
+
+        if counter == 10 {
+            break counter * 2;
+        }
+    };
+
+    println!(&quot;The result is {}&quot;, result);
+}
+</code></pre>
+<h3 id=while>while</h3>
+<p>每次循环之前执行一次条件判断，条件为真则进行循环</p>
+<pre><code class=language-rust>fn main() {
+    let mut number = 3;
+
+    while number != 0 {
+        println!(&quot;{}!&quot;, number);
+
+        number = number - 1;
+    }
+
+    println!(&quot;LIFTOFF!!!&quot;);
+}
+</code></pre>
+<h3 id=for>for</h3>
+<p>遍历集合</p>
+<pre><code class=language-rust>fn main() {
+    let a = [10, 20, 30, 40, 50];
+
+    for element in a.iter() {		//a.iter()创建了一个遍历器，element的类型为&amp;i32,是数组元素的引用
+        println!(&quot;the value is: {}&quot;, element);
+    }
+}
+</code></pre>
+<p>用<code>for</code>实现<code>while</code>中的示例</p>
+<pre><code class=language-rust>fn main() {
+    for number in (1..4).rev() {		//(1..4)表示创建了一个[1,4)区间（Range）,rev()对区间进行反转
+        println!(&quot;{}!&quot;, number);
+    }
+    println!(&quot;LIFTOFF!!!&quot;);
+}
+</code></pre>
 </div>
-<div class=my-4>
-<a href=https://nat5uk1.github.io/tags/rust/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 me-2 hover:text-eureka">#Rust</a>
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+<div>
+<span class="block font-bold">上一页</span>
+<a href=https://nat5uk1.github.io/docs/rust%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/%E5%B8%B8%E8%A7%81%E7%BC%96%E7%A8%8B%E6%A6%82%E5%BF%B5/%E5%87%BD%E6%95%B0/ class=block>函数</a>
 </div>
+<div class="md:text-right mt-4 md:mt-0">
+</div>
+</div>
+</div>
+<div class="hidden lg:block lg:w-1/4">
+<div class="sticky top-16 z-10 hidden lg:block px-6 py-4 bg-secondary-bg pt-16 -mt-16">
+<span class="text-lg font-semibold">本页内容</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 pt-10 -mt-10 border-s">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#if表达式>if表达式</a></li>
+<li><a href=#match表达式>match表达式</a></li>
+<li><a href=#循环>循环</a>
+<ul>
+<li><a href=#loop>loop</a></li>
+<li><a href=#while>while</a></li>
+<li><a href=#for>for</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+<script>window.addEventListener('DOMContentLoaded',()=>{enableStickyToc()})</script>
 </div>
 </div>
 </div>
