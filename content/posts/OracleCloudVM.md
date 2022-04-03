@@ -1,7 +1,7 @@
 ---
 title: "OracleCloudVM"
 date: 2022-04-03T08:03:11+08:00
-draft: true
+draft: false
 ---
 
 # Oracle Cloud VM
