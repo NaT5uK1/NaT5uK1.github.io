@@ -336,10 +336,10 @@ let (x, y, z) = tup;	//方式2:解构赋值
 </ul>
 <h4 id=创建数组>创建数组</h4>
 <p>通过数组字面量创建：</p>
-<pre><code class=language-rust>let squard = [&quot;Able&quot;,&quot;Baker&quot;,&quot;Charlie&quot;];
+<pre><code class=language-rust>let squad = [&quot;Able&quot;,&quot;Baker&quot;,&quot;Charlie&quot;];
 </code></pre>
 <p>声明数组类型与长度：</p>
-<pre><code class=language-rust>let squard: [&amp;str; 3] = [&quot;Able&quot;, &quot;Baker&quot;, &quot;Charlie&quot;];
+<pre><code class=language-rust>let squad: [&amp;str; 3] = [&quot;Able&quot;, &quot;Baker&quot;, &quot;Charlie&quot;];
 </code></pre>
 <p>当数组元素一致时，可简写声明：</p>
 <pre><code class=language-rust>let a = [3; 5];		//与let a = [3,3,3,3,3];等价
@@ -367,7 +367,7 @@ let (x, y, z) = tup;	//方式2:解构赋值
 <li>当多层访问数组越界时：</li>
 </ul>
 <pre><code class=language-rust>fn main() {
-    let squard = [&quot;Able&quot;, &quot;Baker&quot;, &quot;Charlie&quot;];
+    let squad = [&quot;Able&quot;, &quot;Baker&quot;, &quot;Charlie&quot;];
     let index = [1, 2, 3];
     let tank = squard[index[2]];
     println!(&quot;{}&quot;, tank);
