@@ -1,7 +1,7 @@
 ---
 title: "OracleCloudVM搭建指南"
 date: 2022-07-25T09:20:56+08:00
-draft: true
+draft: false
 ---
 
 
