@@ -1,8 +1,10 @@
 ---
-title: "OracleCloudVM"
-date: 2022-04-03T08:03:11+08:00
-draft: false
+title: "OracleCloudVM搭建指南"
+date: 2022-07-25T09:20:56+08:00
+draft: true
 ---
+
+
 
 # Oracle Cloud VM
 
@@ -256,3 +258,222 @@ vncserver@1.service - Start TightVNC server at startup
     Process: 29624 ExecStart=/usr/bin/vncserver -depth 24 -geometry 1280x800 -lo>
    Main PID: 29632 (Xtightvnc)
 ```
+
+
+
+## 更新
+
+```
+sudo apt update
+```
+
+## Firewall
+
++ 查看防火墙状态
+
+```
+sudo ufw status
+
+Status: inactive	#表示防火墙未开启
+```
+
++ 禁用/启用防火墙
+
+```
+sudo ufw disable
+sudo ufw enable
+```
+
++ 添加规则
+
+```
+sudo ufw allow 22/tcp
+sudo ufw deny 8080/tcp
+```
+
+
+
+## iptables
+
++ 开放所有端口
+
+```
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -F
+```
+
+
+
+## 终端美化
+
++ 安装Zsh
+
+```
+sudo apt install zsh
+```
+
++ 查询Zsh版本
+
+```
+zsh --version
+```
+
++ 安装oh-my-zsh
+
+```
+sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+
+Do you want to change your default shell to zsh?[Y/n] y
+```
+
++ 安装zsh插件
+
+```
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+
++ 配置oh-my-zsh
+
+```
+sudo vim ~/.zshrc
+```
+
+```
+#~/.zshrc
+ZSH_THEME="agnoster"
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+```
+
+```
+source ~/.zshrc #应用配置
+```
+
+
+
+## Web Server
+
+### Nginx
+
++ 安装Nginx
+
+```
+sudo apt install nginx
+```
+
++ 查询服务状态
+
+```
+sudo systemctl status nginx
+```
+
++ 创建自定义配置
+
+```
+sudo vim /etc/nginx/conf.d/webserver.conf
+```
+
+以`*.conf`结尾才能被主配置文件识别，或者手动修改`/etc/nginx/nginx.conf`中的`http`的`include`字段
+
+```
+server {
+        listen       80;
+        server_name  your_domain;
+        location / {
+            root   /usr/share/nginx/dist;
+            index  index.html index.htm;
+        }
+}
+```
+
+> 记得域名解析
+
++ 上传服务文件
+
+```
+#本机上传到临时目录
+scp -r ./dist/ ubuntu@your_ip:/tmp
+
+#远程主机移动到nginx目录
+sudo mv /tmp/dist /usr/share/nginx
+```
+
++ 删除默认配置
+
+```
+sudo rm /etc/nginx/sites-enabled/default
+```
+
++ 重新加载
+
+```
+sudo nginx -s reload
+```
+
++ 测试服务
+
+```
+curl 127.0.0.1
+```
+
+
+
+## Python3
+
++ 版本查询
+
+```
+python3 -V
+```
+
++ 安装pip
+
+```
+sudo apt install python3-pip
+```
+
+
+
+## OpenSSL
+
++ 更新
+
+```
+sudo apt upgrade openssl
+```
+
++ 解决error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+
+```
+wget https://www.openssl.org/source/openssl-1.1.1o.tar.gz
+tar -xzf openssl-1.1.1o.tar.gz
+cd openssl-1.1.1o
+./config
+make
+make test
+sudo make install
+
+sudo find / -name libssl.so.1.1
+sudo ln -s /usr/local/lib/libssl.so.1.1 /usr/lib/libssl.so.1.1
+sudo find / -name libcrypto.so.1.1
+sudo ln -s /usr/local/lib/libcrypto.so.1.1 /usr/lib/libcrypto.so.1.1
+```
+
+ 
+
+## 时区
+
++ 查看时区
+
+```
+date -R
+```
+
++ 更改时区
+
+```
+sudo cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+```
+
