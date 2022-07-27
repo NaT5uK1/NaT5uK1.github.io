@@ -1,0 +1,335 @@
+<!doctype html><html lang=zh dir=ltr><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<title>React性能优化 | Confect</title>
+<meta name=generator content="Hugo Eureka 0.9.0">
+<link rel=stylesheet href=https://nat5uk1.github.io/css/eureka.min.css>
+<script defer src=https://nat5uk1.github.io/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<meta name=description content="React性能优化 序言 ​ 我们知道，React在触发组件更新时，会采取双fiber树的方式进行从root节点开始的整树diff。容易想到，假如重新渲染整">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://nat5uk1.github.io/posts/"},{"@type":"ListItem","position":2,"name":"React性能优化","item":"https://nat5uk1.github.io/posts/react%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://nat5uk1.github.io/posts/react%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"},"headline":"React性能优化 | Confect","datePublished":"2022-07-27T15:31:10+08:00","dateModified":"2022-07-27T15:31:10+08:00","wordCount":1992,"publisher":{"@type":"Person","name":"NaT5uK1"},"description":"React性能优化 序言 ​ 我们知道，React在触发组件更新时，会采取双fiber树的方式进行从root节点开始的整树diff。容易想到，假如重新渲染整"}</script><meta property="og:title" content="React性能优化 | Confect">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://nat5uk1.github.io/posts/react%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+<meta property="og:description" content="React性能优化 序言 ​ 我们知道，React在触发组件更新时，会采取双fiber树的方式进行从root节点开始的整树diff。容易想到，假如重新渲染整">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Confect">
+<meta property="article:published_time" content="2022-07-27T15:31:10+08:00">
+<meta property="article:modified_time" content="2022-07-27T15:31:10+08:00">
+<meta property="article:section" content="posts">
+<body class="flex flex-col min-h-screen">
+<header class="fixed flex items-center w-full min-h-16 ps-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+<a href=/ class="me-6 text-primary-text text-xl font-bold">Confect</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/#about class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent me-4">About</a>
+<a href=/posts/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 selected-menu-item me-4">Posts</a>
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent me-4">Docs</a>
+</div>
+<div class=flex>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col start-0 md:start-auto end-auto md:end-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>浅色</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>深色</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>自动</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
+</nav>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
+</div>
+</header>
+<main class="grow pt-16">
+<div class=ps-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">React性能优化</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="me-6 my-2">
+<i class="fas fa-calendar me-1"></i>
+<span>2022-07-27</span>
+</div>
+<div class="me-6 my-2">
+<i class="fas fa-clock me-1"></i>
+<span>4分钟阅读时长</span>
+</div>
+</div>
+<div class=content>
+<h1 id=react性能优化>React性能优化</h1>
+<h2 id=序言>序言</h2>
+<p>​ 我们知道，React在触发组件更新时，会采取双fiber树的方式进行从root节点开始的整树diff。容易想到，假如重新渲染整棵树势必会造成性能浪费，所以React在组件更新阶段内置了性能优化策略，即在某些情况下只作比较而跳过部分节点的渲染阶段。此文就来探究一下性能优化策略。</p>
+<h2 id=性能优化策略>性能优化策略</h2>
+<p>​ 在React中，有三种可变状态<code>props</code> <code>state</code> <code>context</code>，当一个组件不存在这三种可变状态<em><strong>或</strong></em>存在的可变状态的值不会变化时，则该组件是可以满足性能优化条件的，可以跳过该组件的渲染阶段以达到性能优化的目的。</p>
+<h2 id=命中性能优化的方式>命中性能优化的方式</h2>
+<h3 id=拆分可变状态>拆分可变状态</h3>
+<h4 id=示例1>示例1</h4>
+<pre><code class=language-react>import { useState } from &quot;react&quot;
+
+export default function App() {
+  const [count, setCount] = useState(0)
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{count}&lt;/h1&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count+1)
+        }}
+      &gt;click&lt;/button&gt;
+      &lt;ExpensiveComponent /&gt;
+    &lt;/div&gt;
+  )
+}
+
+const ExpensiveComponent = () =&gt; {
+  const now = performance.now()
+  while (performance.now() - now &lt; 100) {}
+  console.log(&quot;Expensive Component rendered&quot;)
+  return &lt;h1&gt;Expensive Component&lt;/h1&gt;
+}
+</code></pre>
+<p>​ 对于上面的<code>ExpensiveComponent</code>组件，不存在<code>props</code> <code>state</code> <code>context</code>这三种可变状态，但每当点击按钮时都会触发<code>ExpensiveComponent</code>组件的重新渲染。这是因为<code>App</code>组件包含<code>state</code>， 每当<code>state</code>变化，<code>App</code>组件及其子孙节点都会重新渲染。</p>
+<p>​ 显然这并不是我们需要的，根据性能优化策略，<code>ExpensiveComponent</code>满足性能优化条件，我们希望跳过该组件的渲染阶段。具体做法是，将<code>state</code>相关逻辑抽离为独立组件<code>Counter</code></p>
+<pre><code class=language-react>import { useState } from &quot;react&quot;
+
+export default function App() {
+  return (
+    &lt;div&gt;
+      &lt;Counter/&gt;
+      &lt;ExpensiveComponent /&gt;
+    &lt;/div&gt;
+  )
+}
+
+const ExpensiveComponent = () =&gt; {
+  const now = performance.now()
+  while (performance.now() - now &lt; 100) {}
+  console.log(&quot;Expensive Component rendered&quot;)
+  return &lt;h1&gt;Expensive Component&lt;/h1&gt;
+}
+
+const Counter = () =&gt; {
+  const [count, setCount] = useState(0)
+  return(
+    &lt;&gt;
+    &lt;h1&gt;{count}&lt;/h1&gt;
+    &lt;button
+      onClick={() =&gt; {
+        setCount(count+1)
+      }}
+    &gt;click&lt;/button&gt;
+    &lt;/&gt;
+  )
+}
+</code></pre>
+<p>​ 当<code>Counter</code>中的<code>state</code>变化时，则会以<code>Counter</code>为根节点重新渲染整棵子树，如此一来，避免了<code>ExpensiveComponent</code>的重复渲染，达到性能优化的目的。</p>
+<h4 id=示例2>示例2</h4>
+<pre><code class=language-react>import { useState } from &quot;react&quot;
+
+export default function App() {
+  const [count, setCount] = useState(0)
+  return (
+    &lt;div title={count}&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count+1)
+        }}
+      &gt;click&lt;/button&gt;
+      &lt;ExpensiveComponent /&gt;
+    &lt;/div&gt;
+  )
+}
+
+const ExpensiveComponent = () =&gt; {
+  const now = performance.now()
+  while (performance.now() - now &lt; 100) {}
+  console.log(&quot;Expensive Component rendered&quot;)
+  return &lt;h1&gt;Expensive Component&lt;/h1&gt;
+}
+</code></pre>
+<p>​ 当可变状态组件与不可变状态组件产生父子关系时，可以用一个包裹组件来抽离可变状态：</p>
+<pre><code class=language-react>import { useState } from &quot;react&quot;
+
+export default function App() {
+  return (
+    &lt;CounterWrapper&gt;
+      &lt;ExpensiveComponent /&gt;
+    &lt;/CounterWrapper&gt;
+  )
+}
+
+const ExpensiveComponent = () =&gt; {
+  const now = performance.now()
+  while (performance.now() - now &lt; 100) {}
+  console.log(&quot;Expensive Component rendered&quot;)
+  return &lt;h1&gt;Expensive Component&lt;/h1&gt;
+}
+
+const CounterWrapper = ({ children }) =&gt; {
+  const [count, setCount] = useState(0)
+  return (
+    &lt;div title={count}&gt;
+      &lt;button
+        onClick={() =&gt; {
+          setCount(count + 1)
+        }}
+      &gt;
+        click
+      &lt;/button&gt;
+      {children}
+    &lt;/div&gt;
+  )
+}
+</code></pre>
+<p>​ 此时<code>App</code>组件不包含可变状态，当<code>CounterWrapper</code>中的<code>state</code>变化时，触发<code>CounterWrapper</code>的重新渲染，由于<code>ExpensiveComponent</code>是以<code>props.children</code>的形式传入且自身是不可变的，也可以命中性能优化策略跳过渲染。</p>
+<blockquote>
+<p>结论：当父组件满足性能优化条件，子孙组件<em><strong>可能</strong></em>命中性能优化策略</p>
+</blockquote>
+<h3 id=性能优化api>性能优化api</h3>
+<p>​ 既然可以通过拆分可变状态的方式达到性能优化的目的，那性能优化api为什么会被提出呢？</p>
+<h4 id=示例3>示例3</h4>
+<pre><code class=language-react>import { useState, useContext, createContext } from &quot;react&quot;
+
+const numContext = createContext()
+const setNumContext = createContext()
+
+export default function App() {
+  const [num, setNum] = useState(0)
+  return (
+    &lt;numContext.Provider value={num}&gt;
+      &lt;setNumContext.Provider value={setNum}&gt;
+        &lt;Middle /&gt;
+      &lt;/setNumContext.Provider&gt;
+    &lt;/numContext.Provider&gt;
+  )
+}
+
+const Middle = () =&gt; {
+  return (
+    &lt;&gt;
+      &lt;Show /&gt;
+      &lt;Button /&gt;
+    	{/* _jsx(Button,{}) */}
+    &lt;/&gt;
+  )
+}
+
+const Show = () =&gt; {
+  const num = useContext(numContext)
+  return &lt;h1&gt;{num}&lt;/h1&gt;
+}
+
+const Button = () =&gt; {
+  const setNum = useContext(setNumContext)
+  console.log(&quot;Button rendered&quot;)
+  return (
+    &lt;button
+      onClick={() =&gt; {
+        setNum(() =&gt; Math.round(Math.random() * 100))
+      }}
+    &gt;
+      random
+    &lt;/button&gt;
+  )
+}
+</code></pre>
+<p>​ 如上述代码所示，<code>Middle</code>组件是不可变的，它的子组件<code>Button</code>也是不可变的，虽然拥有context可变状态，但是<code>setNumContext</code>本身是一个函数，函数本身是不可变的。按照之前的理论，<code>Button</code>组件会命中性能优化策略而跳过渲染，然而事实是，每当点击按钮<code>Button</code>组件都被重新渲染了。大大的问号当头一棒，原因是，在将jsx解析为js代码时，碰到没有<code>props</code>的节点会向<code>_jsx</code>函数传入<code>{}</code>，然后在新旧节点比较时React默认采取的是<code>全等比较</code>，那么新的节点和旧的<code>props</code>值都为<code>{}</code>，但是由于它们的地址不同，就会造成<code>newProps !== oldProps</code>，所以<code>Button</code>节点被认为发生了更新，触发了重新渲染。</p>
+<blockquote>
+<p>这是一个具有传染性的规则，当从组件树某一个节点开始不能命中性能优化策略时，即使它的子孙组件可以命中性能优化策略，也会由于<code>props</code>的全等比较而重新渲染。如此，React.memo()应运而生。</p>
+</blockquote>
+<h5 id=reactmemo>React.memo()</h5>
+<p>​ <code>memo()</code>本质上是在props比较时，把默认的<code>全等比较</code>替换为了<code>浅比较（shallowEqual）</code>，<code>{}</code>的浅比较一定是全等的。所以将<code>memo()</code>用在希望命中性能优化策略组件的父组件上，即可保证从父组件开始新旧props的值是全等的。</p>
+<pre><code class=language-react>import { useState, useContext, createContext, memo } from &quot;react&quot;
+
+const numContext = createContext()
+const setNumContext = createContext()
+
+export default function App() {
+  const [num, setNum] = useState(0)
+  return (
+    &lt;numContext.Provider value={num}&gt;
+      &lt;setNumContext.Provider value={setNum}&gt;
+        &lt;Middle /&gt;
+      &lt;/setNumContext.Provider&gt;
+    &lt;/numContext.Provider&gt;
+  )
+}
+
+const Middle = memo(() =&gt; {
+  return (
+    &lt;&gt;
+      &lt;Show /&gt;
+      &lt;Button /&gt;
+      {/* _jsx(Button,{}) */}
+    &lt;/&gt;
+  )
+})
+
+const Show = () =&gt; {
+  const num = useContext(numContext)
+  return &lt;h1&gt;{num}&lt;/h1&gt;
+}
+
+const Button = () =&gt; {
+  const setNum = useContext(setNumContext)
+  console.log(&quot;Button rendered&quot;)
+  return (
+    &lt;button
+      onClick={() =&gt; {
+        setNum(() =&gt; Math.round(Math.random() * 100))
+      }}
+    &gt;
+      random
+    &lt;/button&gt;
+  )
+}
+</code></pre>
+<h5 id=purecomponent>PureComponent</h5>
+<p>​ 实际上在<code>memo()</code>未出现之前的class组件时期，使用class组件继承<code>PureComponent</code>类组件，即是对props和state进行了一层浅比较。</p>
+<h5 id=usememo>useMemo</h5>
+<p>​ 缓存一个变量，当依赖项不发生改变时，该变量始终读取缓存值。如果不使用<code>useMemo</code>，即使依赖的值不发生改变，每次渲染都会重新创建一个新变量。</p>
+<h5 id=usecallback>useCallback</h5>
+<p>​ 缓存一个函数。其他同<code>useMemo</code></p>
+</div>
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+<div>
+</div>
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">下一页</span>
+<a href=https://nat5uk1.github.io/posts/oraclecloudvm%E6%90%AD%E5%BB%BA%E6%8C%87%E5%8D%97/ class=block>OracleCloudVM搭建指南</a>
+</div>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=ps-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text"> Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
+</div></div>
+</footer>
+</body>
+</html>
